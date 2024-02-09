@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import mineImg from "../../assets/img/mine.png";
 import User from "../User";
+import { useGame } from "../../contexts/GameContext";
 
-const Board = ({ difficulty, gameStatus }) => {
-  const [mines, setMines] = useState([]);
-  const [userCoordinates, setUserCoordinates] = useState({ x: 12, y: 0 });
+const Board = () => {
+  const { difficulty, mines, setMines, gameStatus, setGameStatus, userCoordinates, setShowGameOver } = useGame();
 
   const calculateY = (index) => {
     return Math.floor(index / 25);
@@ -18,10 +18,11 @@ const Board = ({ difficulty, gameStatus }) => {
     for (let i = 0; i < difficulty; i++) {
       let x, y;
 
+      // make sure we don't place mines on top of each other and on top of the user's initial position
       do {
         x = Math.floor(Math.random() * 20);
         y = Math.floor(Math.random() * 25);
-      } while (grid[y][x] === 1);
+      } while (grid[y][x] === 1 || (x === 0 && y === 12));
 
       grid[y][x] = 1;
       mines.push({ x, y });
@@ -31,13 +32,22 @@ const Board = ({ difficulty, gameStatus }) => {
   };
 
   useEffect(() => {
-    setMines(generateMineArray());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (gameStatus === "started") {
+      setMines(generateMineArray());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [difficulty, gameStatus]);
 
-  
   useEffect(() => {
-    console.log(userCoordinates);
+    const mineFound = mines.find(
+      (mine) => mine.x === userCoordinates.x && mine.y === userCoordinates.y
+    );
+    if (mineFound) {
+      setGameStatus("game-over");
+      setTimeout(() => {
+        setShowGameOver(true);
+      }, 2000);
+    }
   }, [userCoordinates]);
 
   return (
@@ -48,8 +58,13 @@ const Board = ({ difficulty, gameStatus }) => {
             key={index}
             className="w-8 h-8 border border-gray-300 border-square-primary rounded-sm bg-white"
           >
-            {mines.find(mine => mine.x === index % 25 && mine.y === calculateY(index)) && <img src={mineImg} alt="mine" />}
-            {userCoordinates.x === index % 25 && userCoordinates.y === calculateY(index) && <User coordinates={userCoordinates} setCoordinates={setUserCoordinates} />}
+            {mines.find(
+              (mine) => mine.x === index % 25 && mine.y === calculateY(index)
+            ) && <img src={mineImg} alt="mine" />}
+            {userCoordinates.x === index % 25 &&
+              userCoordinates.y === calculateY(index) && (
+                <User />
+              )}
           </div>
         ))}
       </div>
