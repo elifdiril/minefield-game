@@ -4,6 +4,7 @@ import NewGame from "../NewGame";
 import GameOver from "../NewGame/GameOver";
 import Board from "../Board";
 import Score from "../Score";
+import Helper from "../Helper";
 
 const Container = () => {
   const { gameStatus, setGameStatus, showGameOver } = useGame();
@@ -19,11 +20,14 @@ const Container = () => {
         </button>
       </div>
 
-      {gameStatus === "new-game" && <NewGame />}
+      {(gameStatus === "new-game" || gameStatus === "won") && <NewGame />}
       {showGameOver && <GameOver />}
       <div className="flex gap-4">
         <Board />
-        <Score />
+        <div className="flex flex-col justify-between">
+          <Score />
+          <Helper />
+        </div>
       </div>
     </div>
   );

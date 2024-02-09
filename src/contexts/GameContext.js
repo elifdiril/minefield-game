@@ -9,6 +9,7 @@ export const GameProvider = ({ children }) => {
   const [mines, setMines] = useState([]);
   const [userCoordinates, setUserCoordinates] = useState({ x: 12, y: 0 });
   const [point, setPoint] = useState(0);
+  const [nextMineDistance, setNextMineDistance] = useState(null);
 
   useEffect(() => {
     if (gameStatus === "started") {
@@ -17,6 +18,21 @@ export const GameProvider = ({ children }) => {
       setPoint(0);
     }
   }, [gameStatus]);
+
+  useEffect(() => {
+    const validMines = mines.filter((mine) => mine.x === userCoordinates.x && mine.y > userCoordinates.y);
+    if (validMines.length > 0) {
+      const distance = validMines.map((mine) => mine.y - userCoordinates.y);
+      setNextMineDistance(Math.min(...distance));
+    } else {
+      setNextMineDistance(null);
+    }
+
+    if (userCoordinates.y === 19) {
+      setGameStatus("won");
+    }
+  }, [userCoordinates.x, userCoordinates.y, mines]);
+
 
   return (
     <GameContext.Provider
@@ -33,6 +49,7 @@ export const GameProvider = ({ children }) => {
         setUserCoordinates,
         point,
         setPoint,
+        nextMineDistance,
       }}
     >
       {children}
