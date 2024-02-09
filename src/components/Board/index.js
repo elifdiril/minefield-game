@@ -51,12 +51,12 @@ const Board = () => {
   }, [userCoordinates]);
 
   return (
-    <div className="h-[780px] w-[930px] bg-bg-secondary rounded-xl flex flex-col items-center p-4">
+    <div className="sm:h-[370px] sm:w-[410px] md:h-[420px] md:w-[505px] lg:h-[780px] lg:w-[930px] bg-bg-secondary rounded-xl flex flex-col items-center p-1 lg:p-4">
       <div className="flex flex-row flex-wrap-reverse gap-1 w-full">
         {Array.from({ length: 20 * 25 }).map((_, index) => (
           <div
             key={index}
-            className="w-8 h-8 border border-gray-300 border-square-primary rounded-sm bg-white"
+            className="sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-8 lg:h-8 border border-gray-300 border-square-primary rounded-sm bg-white"
           >
             {mines.find(
               (mine) => mine.x === index % 25 && mine.y === calculateY(index)
