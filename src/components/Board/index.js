@@ -22,7 +22,7 @@ const Board = () => {
       do {
         x = Math.floor(Math.random() * 20);
         y = Math.floor(Math.random() * 25);
-      } while (grid[y][x] === 1 || (x === 0 && y === 12));
+      } while (grid[y][x] === 1 || (x === 12 && y === 0));
 
       grid[y][x] = 1;
       mines.push({ x, y });
