@@ -4,6 +4,8 @@
 - Tailwind
 - React-Lottie
 
+# [live](https://minefield-game.netlify.app/)
+
 ![](https://github.com/elifdiril/minefield-game/blob/master/public/demo.gif)
 
 
@@ -31,4 +33,6 @@ npm start
 
 to start the client side.
 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fecab892-a08c-4289-a1b3-a2d8831d4f3b/deploy-status)](https://app.netlify.com/sites/minefield-game/deploys)
 
