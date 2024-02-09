@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 
 const GameContext = createContext();
 
@@ -8,6 +8,15 @@ export const GameProvider = ({ children }) => {
   const [showGameOver, setShowGameOver] = useState(false);
   const [mines, setMines] = useState([]);
   const [userCoordinates, setUserCoordinates] = useState({ x: 12, y: 0 });
+  const [point, setPoint] = useState(0);
+
+  useEffect(() => {
+    if (gameStatus === "started") {
+      setShowGameOver(false);
+      setUserCoordinates({ x: 12, y: 0 });
+      setPoint(0);
+    }
+  }, [gameStatus]);
 
   return (
     <GameContext.Provider
@@ -22,6 +31,8 @@ export const GameProvider = ({ children }) => {
         setMines,
         userCoordinates,
         setUserCoordinates,
+        point,
+        setPoint,
       }}
     >
       {children}

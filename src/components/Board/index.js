@@ -4,7 +4,7 @@ import User from "../User";
 import { useGame } from "../../contexts/GameContext";
 
 const Board = () => {
-  const { difficulty, mines, setMines, gameStatus, setGameStatus, userCoordinates, setShowGameOver } = useGame();
+  const { difficulty, mines, setMines, gameStatus, setGameStatus, userCoordinates, showGameOver, setShowGameOver } = useGame();
 
   const calculateY = (index) => {
     return Math.floor(index / 25);
@@ -60,7 +60,7 @@ const Board = () => {
           >
             {mines.find(
               (mine) => mine.x === index % 25 && mine.y === calculateY(index)
-            ) && <img src={mineImg} alt="mine" />}
+            ) && gameStatus === "game-over" && !showGameOver && <img src={mineImg} alt="mine" />}
             {userCoordinates.x === index % 25 &&
               userCoordinates.y === calculateY(index) && (
                 <User />

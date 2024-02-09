@@ -3,7 +3,7 @@ import userImg from "../../assets/img/user.png";
 import { useGame } from "../../contexts/GameContext";
 
 const User = () => {
-  const { gameStatus, setUserCoordinates } = useGame();
+  const { gameStatus, setUserCoordinates, setPoint } = useGame();
   const handleMove = (event) => {
     if (gameStatus !== "started") {
       return;
@@ -17,15 +17,18 @@ const User = () => {
       switch (event.key) {
         case "ArrowUp":
           newY = Math.min(19, prevCoordinates.y + 1);
+          setPoint((prevPoint) => prevPoint + 10);
           break;
         case "ArrowDown":
           newY = Math.max(0, prevCoordinates.y - 1);
           break;
         case "ArrowLeft":
           newX = Math.max(0, prevCoordinates.x - 1);
+          setPoint((prevPoint) => prevPoint + 5);
           break;
         case "ArrowRight":
           newX = Math.min(24, prevCoordinates.x + 1);
+          setPoint((prevPoint) => prevPoint + 5);
           break;
         default:
           break;
