@@ -4,6 +4,8 @@
 - Tailwind
 - React-Lottie
 
+![](https://github.com/elifdiril/minefield-game/blob/master/public/demo.gif)
+
 
 ## In order to run this project in your local environment
 
